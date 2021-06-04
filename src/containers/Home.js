@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { API } from "aws-amplify";
+import { BsThreeDots } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { BsPencilSquare } from "react-icons/bs";
 import ListGroup from "react-bootstrap/ListGroup";
@@ -136,18 +137,21 @@ export default function Home(props) {
   function renderNotes() {
     return (
       <div className="notes">
-        <div className="searchbox">
+        <div className="hdr">
           <h2 className="pb-3 mt-4 mb-3 border-bottom">Your Notes</h2>
           <form onSubmit={submit}>
-            <label>
-              Search:
+            <div className="searchbox">
+              <label className="labelText" >
+                Search: 
+              </label>
               <input type="text" name="searchtext" onChange={e => setSearchTerm(e.target.value)}/>
-            </label>
-            <label>
-              Replace:
+              <label className="labelText" >
+                  Replace: 
+              </label>  
               <input type="text" name="replacetext" onChange={e => setReplaceTerm(e.target.value)}/>
-            </label>
-            <input type="submit" value="Submit"/>
+              <input type="submit" value="Submit"/>
+            </div>
+            
           </form>
         </div>
         {isLoading ? 

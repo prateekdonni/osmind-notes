@@ -8,6 +8,14 @@
   font-weight: 600;
 }
 
-.notes {
-  align-content: center;
+label.labelText {
+  margin-right: 10px;
+}
+
+input {
+  margin-right:10px;
+}
+
+div.searchbox {
+  margin-bottom: 10px;
 }
