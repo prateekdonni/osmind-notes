@@ -73,14 +73,33 @@ export default function Home(props) {
             <span className="ml-2 font-weight-bold">Create a new note</span>
           </ListGroup.Item>
         </LinkContainer>
-        {viewNotes.map(({ noteId, content, createdAt }) => (
+        {viewNotes.map(({ noteId, content, preview, createdAt }) => (
           <LinkContainer key={noteId} to={`/notes/${noteId}`}>
             <ListGroup.Item action>
               <span className="font-weight-bold">
                 {content.trim().split("\n")[0]}
               </span>
               <br />
-              <span className="text-muted">
+              {/* before string */}
+              {content.substring(
+                  content.indexOf(searchTerm)-10,
+                  content.indexOf(searchTerm))
+              }
+              {/* match string */}
+              <span className="text-match">
+                {content.substring(
+                  content.indexOf(searchTerm),
+                  (content.indexOf(searchTerm) + searchTerm.length)
+                )}
+              </span>
+              {/* after string */}
+              {content.substring(
+                  content.indexOf(searchTerm)+searchTerm.length,
+                  (searchTerm.length + content.indexOf(searchTerm)+10)
+              )}
+                
+              <br/>
+              <span>
                 Created: {new Date(createdAt).toLocaleString()}
               </span>
             </ListGroup.Item>
@@ -112,7 +131,6 @@ export default function Home(props) {
   }
 
   const submit = (e) => {
-    e.preventDefault()
     if (searchTerm) {
       var p = notes.filter(function(note){  
         return note.content.includes(searchTerm);

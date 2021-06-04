@@ -23,3 +23,8 @@ div.searchbox {
 div.replaceOptions {
   visibility:hidden;
 }
+
+span.text-match {
+  background-color: yellow;
+
+}
