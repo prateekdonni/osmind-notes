@@ -19,3 +19,7 @@ input {
 div.searchbox {
   margin-bottom: 10px;
 }
+
+div.replaceOptions {
+  visibility:hidden;
+}

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { API } from "aws-amplify";
-import { BsThreeDots } from "react-icons/bs";
 import { Link } from "react-router-dom";
-import { BsPencilSquare } from "react-icons/bs";
+import { BsPencilSquare, BsThreeDots } from "react-icons/bs";
 import ListGroup from "react-bootstrap/ListGroup";
 import { LinkContainer } from "react-router-bootstrap";
 import { useAppContext } from "../libs/contextLib";
@@ -16,6 +15,7 @@ export default function Home(props) {
   const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState(null);
   const [replaceTerm, setReplaceTerm] = useState(null);
+  const [replaceVisible, setReplaceVisible] = useState(false);
   let [viewNotes, setViewNotes] = useState([]);
 
 
@@ -107,6 +107,10 @@ export default function Home(props) {
     );
   }
 
+  const handleToggle= (e) => {
+    setReplaceVisible(!replaceVisible);
+  }
+
   const submit = (e) => {
     e.preventDefault()
     if (searchTerm) {
@@ -145,11 +149,16 @@ export default function Home(props) {
                 Search: 
               </label>
               <input type="text" name="searchtext" onChange={e => setSearchTerm(e.target.value)}/>
-              <label className="labelText" >
-                  Replace: 
-              </label>  
-              <input type="text" name="replacetext" onChange={e => setReplaceTerm(e.target.value)}/>
-              <input type="submit" value="Submit"/>
+              <BsThreeDots onClick={handleToggle}></BsThreeDots> 
+              {replaceVisible && <div>
+                <label className="labelText" >
+                    Replace: 
+                </label>  
+                <input type="text" name="replacetext" onChange={e => setReplaceTerm(e.target.value)}/>
+                <input type="submit" value="Submit"/>
+                </div>
+              }
+              
             </div>
             
           </form>
