@@ -1,5 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
+// import Loader from 'react-loader-spinner';
 import Form from "react-bootstrap/Form";
+import Loader from 'react-loader-spinner';
 import { API, Storage } from "aws-amplify";
 import { useParams, useHistory } from "react-router-dom";
 import LoaderButton from "../components/LoaderButton";
@@ -19,12 +21,14 @@ export default function Notes() {
 
   useEffect(() => {
     function loadNote() {
+      setIsLoading(true);
       return API.get("notes", `/notes/${id}`);
     }
 
     async function onLoad() {
       try {
         const note = await loadNote();
+        setIsLoading(false);
         const { content, attachment } = note;
 
         if (attachment) {
@@ -37,7 +41,6 @@ export default function Notes() {
         onError(e);
       }
     }
-
     onLoad();
   }, [id]);
 
@@ -116,7 +119,16 @@ export default function Notes() {
       setIsDeleting(false);
     }
   }
-
+  
+  if (isLoading){
+    return (<Loader
+            class="loadingspinner"
+            type="TailSpin"
+            color="#00BFFF"
+            height={30}
+            width={30}
+          />);
+  }
   return (
     <div className="Notes">
       {note && (
