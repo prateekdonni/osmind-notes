@@ -51,15 +51,16 @@ export default function Home(props) {
   }
 
   function renderNotesList(notes) {
+    var p = [];
     if (searchTerm && replaceTerm) {
-      var p = notes.filter(function(note){
+      p = notes.filter(function(note){
         return note.content.replace(searchTerm,replaceTerm);
       });
       viewNotes = p;
 
     }
     if (searchTerm) {
-      var p =  notes.filter(function(note){
+      p =  notes.filter(function(note){
         return note.content.includes(searchTerm);
       });
       viewNotes = p;
@@ -80,25 +81,24 @@ export default function Home(props) {
                 {content.trim().split("\n")[0]}
               </span>
               <br />
-              {/* before string */}
-              {content.substring(
+              {searchTerm &&
+              content.substring(
                   content.indexOf(searchTerm)-10,
                   content.indexOf(searchTerm))
-              }
-              {/* match string */}
+             }
+             {searchTerm &&
               <span className="text-match">
                 {content.substring(
                   content.indexOf(searchTerm),
                   (content.indexOf(searchTerm) + searchTerm.length)
                 )}
-              </span>
-              {/* after string */}
-              {content.substring(
+              </span>}
+              {searchTerm &&
+              content.substring(
                   content.indexOf(searchTerm)+searchTerm.length,
                   (searchTerm.length + content.indexOf(searchTerm)+10)
               )}
-                
-              <br/>
+              {searchTerm && <br/>}
               <span>
                 Created: {new Date(createdAt).toLocaleString()}
               </span>
@@ -131,14 +131,15 @@ export default function Home(props) {
   }
 
   const submit = (e) => {
+    var p = [];
     if (searchTerm) {
-      var p = notes.filter(function(note){  
+      p = notes.filter(function(note){  
         return note.content.includes(searchTerm);
       });
       viewNotes = p;
     }
     if (searchTerm && replaceTerm) {
-      var p = notes.filter(function(note){
+      p = notes.filter(function(note){
         if (note.content.includes(searchTerm)){
           var tempNote = note;
           tempNote.content = tempNote.content.replace(searchTerm,replaceTerm);
